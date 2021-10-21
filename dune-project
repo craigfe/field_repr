@@ -1,5 +1,6 @@
 (lang dune 2.8)
 (generate_opam_files true)
+(cram enable)
 
 (name ppx_field_repr)
 (source (github CraigFe/ocaml-field-repr))

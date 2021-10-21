@@ -1,5 +1,14 @@
-(test
- (name main)
- (libraries alcotest)
- (preprocess
-  (pps ppx_field_repr)))
+(executable
+ (name standalone)
+ (modules standalone)
+ (libraries ppx_field_repr))
+
+(env
+ (_
+  (binaries
+   (./standalone.exe as standalone))))
+
+(cram
+ (deps
+  %{bin:standalone}
+  (package ppx_field_repr)))
