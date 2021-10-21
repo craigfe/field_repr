@@ -10,5 +10,6 @@
  (name ppx_field_repr)
  (synopsis "Efficient run-time representations of OCaml record fields")
  (depends
+  (ocaml (>= 4.10.0))
   (ppxlib (>= 0.16.0)) ;; Use OMP 2.0
   (alcotest :with-test)))

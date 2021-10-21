@@ -7,6 +7,7 @@ homepage: "https://github.com/CraigFe/ocaml-field-repr"
 bug-reports: "https://github.com/CraigFe/ocaml-field-repr/issues"
 depends: [
   "dune" {>= "2.8"}
+  "ocaml" {>= "4.10.0"}
   "ppxlib" {>= "0.16.0"}
   "alcotest" {with-test}
   "odoc" {with-doc}
