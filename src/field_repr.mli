@@ -36,10 +36,7 @@ module O : sig
   val ( .%() ) : 'r -> ('r, 'd, _) t -> 'd
   (** An operator alias for {!get}. *)
 
-  val ( .%()<- ) : 'r -> ('r, 'd, _) t -> 'd -> 'r
-  (** An operator alias for {!update}. *)
-
-  val ( .%!()<- ) : 'r -> ('r, 'd, [ `mutable_ ]) t -> 'd -> unit
+  val ( .%()<- ) : 'r -> ('r, 'd, [ `mutable_ ]) t -> 'd -> unit
   (** An operator alias for {!set}. *)
 end
 
