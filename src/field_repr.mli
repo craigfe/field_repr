@@ -1,5 +1,6 @@
 (*————————————————————————————————————————————————————————————————————————————
    Copyright (c) 2021 Craig Ferguson <me@craigfe.io>
+   Copyright (c) 2021 Jules Aguillon <juloo.dsi@gmail.com>
    Distributed under the MIT license. See terms at the end of this file.
   ————————————————————————————————————————————————————————————————————————————*)
 
@@ -51,6 +52,7 @@ end
 
 (*————————————————————————————————————————————————————————————————————————————
    Copyright (c) 2021 Craig Ferguson <me@craigfe.io>
+   Copyright (c) 2021 Jules Aguillon <juloo.dsi@gmail.com>
 
    Permission to use, copy, modify, and/or distribute this software for any
    purpose with or without fee is hereby granted, provided that the above
