@@ -14,8 +14,8 @@ let type_of_label record_type label =
   let field_type = label.pld_type
   and mutable_flag =
     match label.pld_mutable with
-    | Immutable -> [%type: Field_repr.immutable]
-    | Mutable -> [%type: Field_repr.mutable_]
+    | Immutable -> [%type: [ `immutable ]]
+    | Mutable -> [%type: [ `mutable_ ]]
   in
   [%type: ([%t record_type], [%t field_type], [%t mutable_flag]) Field_repr.t]
 
