@@ -3,7 +3,13 @@ open Field_repr.O
 let check_int pos = Alcotest.(check ~pos int) ""
 let check_string pos = Alcotest.(check ~pos string) ""
 
-type t = { mutable foo : int; mutable bar : string } [@@deriving field_repr]
+module X : sig
+  type t = { mutable foo : int; mutable bar : string } [@@deriving field_repr]
+end = struct
+  type t = { mutable foo : int; mutable bar : string } [@@deriving field_repr]
+end
+
+open X
 
 let check =
   let testable =
