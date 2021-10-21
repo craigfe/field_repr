@@ -31,6 +31,7 @@ let update : type record data. record -> (record, data, _) t -> data -> record =
 module O = struct
   let ( .%() ) r t = get r t
   let ( .%()<- ) r t d = set r t d
+  let with_ t d r = update r t d
 end
 
 module Obj = struct

@@ -39,6 +39,10 @@ module O : sig
 
   val ( .%()<- ) : 'r -> ('r, 'd, [ `mutable_ ]) t -> 'd -> unit
   (** An operator alias for {!set}. *)
+
+  val with_ : ('r, 'd, _) t -> 'd -> 'r -> 'r
+  (** An alias of {!update}, intended to be used in pipelines (i.e.
+      [record |> with_ field data]). *)
 end
 
 module Obj : sig
