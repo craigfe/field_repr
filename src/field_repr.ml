@@ -3,8 +3,8 @@
    Distributed under the MIT license. See terms at the end of this file.
   ————————————————————————————————————————————————————————————————————————————*)
 
-type mutable_ = |
-type immutable = |
+type mutable_ = [ `mutable_ ]
+type immutable = [ `immutable ]
 type (_, _, _) t = int
 
 external identity : 'a -> 'a = "%identity"
@@ -15,7 +15,8 @@ let index = identity
 let get : type record data. record -> (record, data, _) t -> data =
  fun record index -> magic (Obj.field (magic record : Obj.t) index)
 
-let set : type record data. record -> (record, data, mutable_) t -> data -> unit
+let set :
+    type record data. record -> (record, data, [ `mutable_ ]) t -> data -> unit
     =
  fun record index data ->
   Obj.set_field (magic record : Obj.t) index (magic data : Obj.t)

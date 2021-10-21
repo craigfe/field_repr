@@ -1,9 +1,6 @@
 Efficient run-time representations of OCaml record fields.
 
 ```ocaml
-type mutable_ = |
-type immutable = |
-
 type ('record, 'data, 'mutable_) t
 (** The type of runtime representations of OCaml record fields. *)
 
@@ -16,7 +13,7 @@ val update : 'record -> ('record, 'data, _) t -> 'data -> 'record
     record produced by setting (the field represented by) [field] to [data] in
     [record]. *)
 
-val set : 'record -> ('record, 'data, mutable_) t -> 'data -> unit
+val set : 'record -> ('record, 'data, [ `mutable_ ]) t -> 'data -> unit
 (** [set record field data] performs [record.field <- data], i.e. updates the
     value of (the field represented by) [field] in [record] to [data]. *)
 ```
@@ -29,7 +26,7 @@ type t = { foo : int; mutable bar : string } [@@deriving field_repr]
 
 (* Generates: *)
 
-val foo : (t, int, Field_repr.immutable) Field_repr.t
-val bar : (t, string, Field_repr.mutable_) Field_repr.t
+val foo : (t, int, [ `immutable ]) Field_repr.t
+val bar : (t, string, [ `mutable_ ]) Field_repr.t
 ```
 

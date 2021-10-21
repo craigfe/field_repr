@@ -5,9 +5,8 @@ Make sure that the type annotations are enough to make the set operation safe.
   File "main.ml", line 5, characters 19-22:
   5 |   Field_repr.set t var 42
                          ^^^
-  Error: This expression has type (t, int, Field_repr.immutable) Field_repr.t
+  Error: This expression has type (t, int, [ `immutable ]) Field_repr.t
          but an expression was expected of type
-           (t, int, Field_repr.mutable_) Field_repr.t
-         Type Field_repr.immutable is not compatible with type
-           Field_repr.mutable_ 
+           (t, int, [ `mutable_ ]) Field_repr.t
+         These two variant types have no intersection
   [2]

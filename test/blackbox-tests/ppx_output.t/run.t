@@ -10,13 +10,11 @@ What the PPX does:
     struct
       let _ = fun (_ : t) -> ()
       let foo =
-        (Field_repr.Obj.unsafe_field_of_index 0 : (t, int,
-                                                    Field_repr.immutable)
+        (Field_repr.Obj.unsafe_field_of_index 0 : (t, int, [ `immutable ])
                                                     Field_repr.t)
       let _ = foo
       let bar =
-        (Field_repr.Obj.unsafe_field_of_index 1 : (t, bool,
-                                                    Field_repr.immutable)
+        (Field_repr.Obj.unsafe_field_of_index 1 : (t, bool, [ `immutable ])
                                                     Field_repr.t)
       let _ = bar
     end[@@ocaml.doc "@inline"][@@merlin.hide ]
@@ -32,7 +30,7 @@ With a mutable field:
     struct
       let _ = fun (_ : t) -> ()
       let m =
-        (Field_repr.Obj.unsafe_field_of_index 0 : (t, int, Field_repr.mutable_)
+        (Field_repr.Obj.unsafe_field_of_index 0 : (t, int, [ `mutable_ ])
                                                     Field_repr.t)
       let _ = m
     end[@@ocaml.doc "@inline"][@@merlin.hide ]
@@ -48,6 +46,6 @@ In an interface file:
   include
     sig
       [@@@ocaml.warning "-32"]
-      val foo : (t, int, Field_repr.immutable) Field_repr.t
-      val bar : (t, bool, Field_repr.immutable) Field_repr.t
+      val foo : (t, int, [ `immutable ]) Field_repr.t
+      val bar : (t, bool, [ `immutable ]) Field_repr.t
     end[@@ocaml.doc "@inline"][@@merlin.hide ]
