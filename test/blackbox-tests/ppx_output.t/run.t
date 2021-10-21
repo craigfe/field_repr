@@ -36,3 +36,18 @@ With a mutable field:
                                                     Field_repr.t)
       let _ = m
     end[@@ocaml.doc "@inline"][@@merlin.hide ]
+
+In an interface file:
+
+  $ standalone -intf - <<END
+  > type t = { foo : int; bar : bool } [@@deriving field_repr]
+  > END
+  type t = {
+    foo: int ;
+    bar: bool }[@@deriving field_repr]
+  include
+    sig
+      [@@@ocaml.warning "-32"]
+      val foo : (t, int, Field_repr.immutable) Field_repr.t
+      val bar : (t, bool, Field_repr.immutable) Field_repr.t
+    end[@@ocaml.doc "@inline"][@@merlin.hide ]
