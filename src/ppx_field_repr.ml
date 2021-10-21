@@ -19,9 +19,10 @@ let type_of_label record_type label =
   in
   [%type: ([%t record_type], [%t field_type], [%t mutable_flag]) Field_repr.t]
 
-(** [\[ (label_name, loc, type) \]] Raise an error if the declaration is not of
-    a record. *)
-let fields_of_type_declaration ~loc tdecl =
+type field = { name : label loc; loc : location; data : core_type }
+
+(** Raise an error if the declaration is not of a record. *)
+let fields_of_type_declaration ~loc tdecl : field list =
   let tdecl = name_type_params_in_td tdecl in
   let labels =
     match tdecl.ptype_kind with
@@ -31,26 +32,30 @@ let fields_of_type_declaration ~loc tdecl =
   in
   let record_type = core_type_of_type_declaration tdecl in
   ListLabels.map labels ~f:(fun label ->
-      (label.pld_name, label.pld_loc, type_of_label record_type label))
+      {
+        name = label.pld_name;
+        loc = label.pld_loc;
+        data = type_of_label record_type label;
+      })
 
 let str_type_decl ~loc ~path:_ (_, tdecls) =
   ListLabels.concat_map tdecls ~f:(fun tdecl ->
       fields_of_type_declaration ~loc tdecl
-      |> ListLabels.mapi ~f:(fun pos (field_name, loc, type_) ->
+      |> ListLabels.mapi ~f:(fun pos { name; loc; data } ->
              let repr =
                [%expr Field_repr.Obj.unsafe_field_of_index [%e eint ~loc pos]]
              in
              pstr_value ~loc Nonrecursive
                [
-                 value_binding ~loc ~pat:(ppat_var ~loc field_name)
-                   ~expr:(pexp_constraint ~loc repr type_);
+                 value_binding ~loc ~pat:(ppat_var ~loc name)
+                   ~expr:(pexp_constraint ~loc repr data);
                ]))
 
 let sig_type_decl ~loc ~path:_ (_, tdecls) =
   ListLabels.concat_map tdecls ~f:(fun tdecl ->
       fields_of_type_declaration ~loc tdecl
-      |> ListLabels.map ~f:(fun (name, loc, type_) ->
-             psig_value ~loc (value_description ~loc ~name ~type_ ~prim:[])))
+      |> ListLabels.map ~f:(fun { name; loc; data } ->
+             psig_value ~loc (value_description ~loc ~name ~type_:data ~prim:[])))
 
 let () =
   let open Deriving in
