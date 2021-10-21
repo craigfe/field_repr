@@ -18,12 +18,9 @@ val update : 'record -> ('record, 'data, _) t -> 'data -> 'record
     record produced by setting (the field represented by) [field] to [data] in
     [record]. *)
 
-val unsafe_set : 'record -> ('record, 'data, mutable_) t -> 'data -> unit
-(** [unsafe_set record field data] performs [record.field <- data], i.e. updates
-    the value of (the field represented by) [field] in [record] to [data].
-
-    NOTE: this results in undefined behaviour if the given record is not
-    [mutable]. *)
+val set : 'record -> ('record, 'data, mutable_) t -> 'data -> unit
+(** [set record field data] performs [record.field <- data], i.e. updates the
+    value of (the field represented by) [field] in [record] to [data]. *)
 
 val index : (_, _, _) t -> int
 (** [index field] is the index of the field represented by [field] in the
@@ -37,7 +34,7 @@ module O : sig
   (** An operator alias for {!update}. *)
 
   val ( .%!()<- ) : 'r -> ('r, 'd, mutable_) t -> 'd -> unit
-  (** An operator alias for {!unsafe_set}. *)
+  (** An operator alias for {!set}. *)
 end
 
 module Obj : sig

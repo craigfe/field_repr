@@ -25,7 +25,7 @@ let test_update () =
   check __POS__ { foo = 2; bar = "A" } (x.%(foo) <- 2);
   check __POS__ { foo = 1; bar = "B" } (x.%(bar) <- "B")
 
-let test_unsafe_set () =
+let test_set () =
   let x = { foo = 1; bar = "A" } in
   x.%!(foo) <- 2;
   check __POS__ { foo = 2; bar = "A" } x;
@@ -40,6 +40,6 @@ let () =
         [
           Alcotest.test_case "get" `Quick test_get;
           Alcotest.test_case "update" `Quick test_update;
-          Alcotest.test_case "unsafe_set" `Quick test_unsafe_set;
+          Alcotest.test_case "set" `Quick test_set;
         ] );
     ]
