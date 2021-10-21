@@ -15,21 +15,21 @@ let index = identity
 let get : type record data. record -> (record, data, _) t -> data =
  fun record index -> magic (Obj.field (magic record : Obj.t) index)
 
-let unsafe_set :
-    type record data. record -> (record, data, mutable_) t -> data -> unit =
+let set : type record data. record -> (record, data, mutable_) t -> data -> unit
+    =
  fun record index data ->
   Obj.set_field (magic record : Obj.t) index (magic data : Obj.t)
 
 let update : type record data. record -> (record, data, _) t -> data -> record =
  fun record index data ->
   let record : record = magic (Obj.dup (magic record : Obj.t)) in
-  unsafe_set record index data;
+  set record index data;
   record
 
 module O = struct
   let ( .%() ) r t = get r t
   let ( .%()<- ) r t d = update r t d
-  let ( .%!()<- ) r t d = unsafe_set r t d
+  let ( .%!()<- ) r t d = set r t d
 end
 
 module Obj = struct
