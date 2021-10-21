@@ -22,9 +22,17 @@ let str_type_decl ~loc ~path:_ (_, tdecls) =
       ListLabels.mapi labels ~f:(fun pos label ->
           let field_name = label.pld_name.txt
           and field_type = label.pld_type
+          and mutable_flag =
+            match label.pld_mutable with
+            | Immutable -> [%type: Field_repr.immutable]
+            | Mutable -> [%type: Field_repr.mutable_]
           and loc = label.pld_loc in
           let type_ =
-            [%type: ([%t record_type], [%t field_type]) Field_repr.t]
+            [%type:
+              ( [%t record_type],
+                [%t field_type],
+                [%t mutable_flag] )
+              Field_repr.t]
           in
           let repr =
             [%expr Field_repr.Obj.unsafe_field_of_index [%e eint ~loc pos]]

@@ -3,42 +3,45 @@
    Distributed under the MIT license. See terms at the end of this file.
   ————————————————————————————————————————————————————————————————————————————*)
 
-type ('record, 'data) t
+type mutable_ = |
+type immutable = |
+
+type ('record, 'data, 'mutable_) t
 (** The type of runtime representations of OCaml record fields. *)
 
-val get : 'record -> ('record, 'data) t -> 'data
+val get : 'record -> ('record, 'data, _) t -> 'data
 (** [get record field] is [record.field], i.e. the data contained by (the field
     represented by) [field] in [record]. *)
 
-val update : 'record -> ('record, 'data) t -> 'data -> 'record
+val update : 'record -> ('record, 'data, _) t -> 'data -> 'record
 (** [update record field data] is [{ record with field = data }], i.e. the
     record produced by setting (the field represented by) [field] to [data] in
     [record]. *)
 
-val unsafe_set : 'record -> ('record, 'data) t -> 'data -> unit
+val unsafe_set : 'record -> ('record, 'data, mutable_) t -> 'data -> unit
 (** [unsafe_set record field data] performs [record.field <- data], i.e. updates
     the value of (the field represented by) [field] in [record] to [data].
 
     NOTE: this results in undefined behaviour if the given record is not
     [mutable]. *)
 
-val index : (_, _) t -> int
+val index : (_, _, _) t -> int
 (** [index field] is the index of the field represented by [field] in the
     runtime representation of the corresponding record. *)
 
 module O : sig
-  val ( .%() ) : 'r -> ('r, 'd) t -> 'd
+  val ( .%() ) : 'r -> ('r, 'd, _) t -> 'd
   (** An operator alias for {!get}. *)
 
-  val ( .%()<- ) : 'r -> ('r, 'd) t -> 'd -> 'r
+  val ( .%()<- ) : 'r -> ('r, 'd, _) t -> 'd -> 'r
   (** An operator alias for {!update}. *)
 
-  val ( .%!()<- ) : 'r -> ('r, 'd) t -> 'd -> unit
+  val ( .%!()<- ) : 'r -> ('r, 'd, mutable_) t -> 'd -> unit
   (** An operator alias for {!unsafe_set}. *)
 end
 
 module Obj : sig
-  val unsafe_field_of_index : int -> (_, _) t
+  val unsafe_field_of_index : int -> (_, _, _) t
   (** Build a record representation from a field {i index} (0 is the first field
       in the runtime representation, 1 is the next field etc.).
 
