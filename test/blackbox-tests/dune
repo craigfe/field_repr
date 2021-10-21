@@ -6,7 +6,7 @@
 (executable
  (name standalone)
  (modules standalone)
- (libraries ppx_field_repr))
+ (libraries field_repr.ppx))
 
 (env
  (_
@@ -16,7 +16,7 @@
 (cram
  (deps
   %{bin:standalone}
-  (package ppx_field_repr))
+  (package field_repr))
  (enabled_if
   (and
    (>= %{ocaml_version} "4.13")

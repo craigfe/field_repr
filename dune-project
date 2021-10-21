@@ -2,13 +2,13 @@
 (generate_opam_files true)
 (cram enable)
 
-(name ppx_field_repr)
+(name field_repr)
 (source (github CraigFe/ocaml-field-repr))
 (license MIT)
 (maintainers "Craig Ferguson <me@craigfe.io>")
 
 (package
- (name ppx_field_repr)
+ (name field_repr)
  (synopsis "Efficient run-time representations of OCaml record fields")
  (depends
   (ocaml (>= 4.10.0))

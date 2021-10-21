@@ -2,4 +2,4 @@
  (name main)
  (libraries alcotest)
  (preprocess
-  (pps ppx_field_repr)))
+  (pps field_repr.ppx)))
