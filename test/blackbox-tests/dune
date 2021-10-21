@@ -16,4 +16,8 @@
 (cram
  (deps
   %{bin:standalone}
-  (package ppx_field_repr)))
+  (package ppx_field_repr))
+ (enabled_if
+  (and
+   (>= %{ocaml_version} "4.13")
+   (< %{ocaml_version} "4.14"))))
