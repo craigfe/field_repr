@@ -28,14 +28,14 @@ let test_get () =
 
 let test_update () =
   let x = { foo = 1; bar = "A" } in
-  check __POS__ { foo = 2; bar = "A" } (x.%(foo) <- 2);
-  check __POS__ { foo = 1; bar = "B" } (x.%(bar) <- "B")
+  check __POS__ { foo = 2; bar = "A" } (Field_repr.update x foo 2);
+  check __POS__ { foo = 1; bar = "B" } (Field_repr.update x bar "B")
 
 let test_set () =
   let x = { foo = 1; bar = "A" } in
-  x.%!(foo) <- 2;
+  x.%(foo) <- 2;
   check __POS__ { foo = 2; bar = "A" } x;
-  x.%!(bar) <- "B";
+  x.%(bar) <- "B";
   check __POS__ { foo = 2; bar = "B" } x;
   ()
 
