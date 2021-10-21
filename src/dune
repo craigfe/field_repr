@@ -1,0 +1,13 @@
+(library
+ (name field_repr)
+ (public_name ppx_field_repr.lib)
+ (modules field_repr))
+
+(library
+ (kind ppx_deriver)
+ (name ppx_field_repr)
+ (modules ppx_field_repr)
+ (libraries ppxlib)
+ (ppx_runtime_libraries field_repr)
+ (preprocess
+  (pps ppxlib.metaquot)))

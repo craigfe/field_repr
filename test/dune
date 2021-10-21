@@ -1,0 +1,5 @@
+(test
+ (name main)
+ (libraries alcotest)
+ (preprocess
+  (pps ppx_field_repr)))
