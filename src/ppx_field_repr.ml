@@ -21,7 +21,8 @@ let type_of_label record_type label =
 
 type field = { name : label loc; loc : location; data : core_type }
 
-(** Raise an error if the declaration is not of a record. *)
+(** Raise an error if the declaration is not of a record, or if the record type
+    is [private]. *)
 let fields_of_type_declaration ~loc tdecl : field list =
   let tdecl = name_type_params_in_td tdecl in
   let labels =
@@ -30,6 +31,8 @@ let fields_of_type_declaration ~loc tdecl : field list =
     | Ptype_open | Ptype_variant _ | Ptype_abstract ->
         raise_errorf ~loc "type must be a record declaration."
   in
+  if tdecl.ptype_private = Private then
+    raise_errorf ~loc "record type must not be private.";
   let record_type = core_type_of_type_declaration tdecl in
   ListLabels.map labels ~f:(fun label ->
       {
